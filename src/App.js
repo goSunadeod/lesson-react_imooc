@@ -1,28 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
-import {Button} from 'antd';
-import './App.less';
-
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <Button type="primary">哈哈</Button>
-      </header>
-    </div>
-  );
+import React, {Component, Fragment} from 'react';
+import { CSSTransition, TransitionGroup } from "react-transition-group";
+import './style.css'
+class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            list: []
+        };
+        this.handleAddItem = this.handleAddItem.bind(this);
+    }
+    render() {
+        return (
+          <Fragment>
+              <TransitionGroup>
+              {
+                  this.state.list.map((item, index) => (
+                    <CSSTransition
+                      key={index}
+                      timeout={1000}
+                      classNames="fade"
+                      appear={true}
+                    >
+                    <div key={index}>{item}</div>
+                    </CSSTransition>
+                  ))
+              }
+              </TransitionGroup>
+              <button onClick={this.handleAddItem}>toggle</button>
+          </Fragment>
+        )
+    }
+    handleAddItem() {
+        this.setState((preState) => {
+            return {
+                list: [...preState.list, 'item']
+            }
+        });
+    }
 }
 
-export default App;
+export default App
