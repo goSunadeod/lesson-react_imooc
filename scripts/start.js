@@ -42,7 +42,7 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 
 // Tools like Cloud9 rely on this.
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
-const HOST = process.env.HOST || 'localhost.charlesproxy.com';
+const HOST = process.env.HOST || '0.0.0.0';
 // 如果需要用到新版本charles进行抓包 需要用 localhost.charlesproxy.com 来代替 0.0.0.0 当然0.0.0.0 页面访问ip地址 charles进行监听也可
 if (process.env.HOST) {
   console.log(
