@@ -1,4 +1,4 @@
-import {INIT_DATA, CHANGE_VALUE, ADD_TODO_ITEM} from './actionType';
+import {INIT_DATA, CHANGE_VALUE, ADD_TODO_ITEM, GET_INIT_LIST} from './actionType';
 import axios from 'axios';
 
 export const changeValue = (value) => (
@@ -23,10 +23,16 @@ export const initData = (data) => (
 
 export const getTodo = () => {
     return (dispatch) => {
-        axios.get('/api/todo').then(res => {
+        //  可以通过charles 或者 easy-mock 进行代理
+        axios.get('/api/todoList').then(res => {
             const data = res.data;
             const action = initData(data);
             dispatch(action)
         })
     }
 }
+
+
+export const getInitList = () => ({
+    type: GET_INIT_LIST
+})
