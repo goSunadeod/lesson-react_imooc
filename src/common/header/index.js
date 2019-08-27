@@ -8,13 +8,50 @@ import {
     NavSearch,
     Addition,
     Button,
-    SearchWrapper
+    SearchWrapper,
+    SearchInfo,
+    SearchInfoTitle,
+    SearchInfoSwitch,
+    SearchInfoItem,
+    SearchInfoList
 } from "./style";
 import { CSSTransition } from 'react-transition-group';
 import {actionCreators} from './store';
 
-class Header extends Component {
 
+class Header extends Component {
+    getListArea() {
+        const {focused,mouseIn, list, page, totalPage, handleMouseEnter, handleMouseLeave, handleChangePage} = this.props;
+        const newList = list.toJS();
+        const pageList = [];
+        if (newList.length) {
+            for(let i = (page - 1) * 10; i< page * 10; i++) {
+                pageList.push(
+                  <SearchInfoItem key={newList[i]}>{newList[i]}</SearchInfoItem>
+                )
+            }
+        }
+        if (focused || mouseIn) {
+            return (
+              <SearchInfo
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+              >
+                  <SearchInfoTitle>
+                      热门搜索
+                      <SearchInfoSwitch onClick={() => handleChangePage(page, totalPage)}>
+                          换一批
+                      </SearchInfoSwitch>
+                  </SearchInfoTitle>
+                  <SearchInfoList>
+                      {pageList}
+                  </SearchInfoList>
+              </SearchInfo>
+            )
+        } else {
+            return null;
+        }
+    }
     render() {
         const { focused, handleInputFocus, handleInputBlur, } = this.props;
         return (
@@ -40,6 +77,7 @@ class Header extends Component {
                           ></NavSearch>
                       </CSSTransition>
                       <i className={focused ? 'focused iconfont zoom': 'iconfont zoom'}>&#xe615;</i>
+                      {this.getListArea()}
                   </SearchWrapper>
               </Nav>
               <Addition>
@@ -56,18 +94,36 @@ class Header extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        focused: state.header.get('focused')
+        focused: state.getIn(['header', 'focused']),
+        list: state.getIn(['header', 'list']),
+        page: state.getIn(['header', 'page']),
+        totalPage: state.getIn(['header', 'totalPage']),
+        mouseIn: state.getIn(['header', 'mouseIn']),
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
         handleInputFocus() {
+            dispatch(actionCreators.getList())
             dispatch(actionCreators.searchFocus())
         },
         handleInputBlur() {
             dispatch(actionCreators.searchBlur())
-        }
+        },
+        handleMouseEnter() {
+            dispatch(actionCreators.mouseEnter())
+        },
+        handleMouseLeave() {
+            dispatch(actionCreators.mouseLeave())
+        },
+        handleChangePage(page, totalPage) {
+            if (page < totalPage) {
+                dispatch(actionCreators.changePage(page + 1));
+            }else {
+                dispatch(actionCreators.changePage(1));
+            }
+        },
     }
 }
 
