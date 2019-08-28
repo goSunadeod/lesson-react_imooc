@@ -106,6 +106,29 @@ export const SearchInfo = styled.div`
 	padding: 0 20px;
 	box-shadow: 0 0 8px rgba(0, 0, 0, .2);
 	background: #fff;
+	&:before {
+	    content: "";
+        left: 47px;
+        width: 10px;
+        height: 10px;
+        transform: rotate(45deg);
+        top: -5px;
+        z-index: -1;
+        position: absolute;
+        background-color: #fff;
+        box-shadow: 0 0 8px rgba(0,0,0,.2);
+	}
+	&:after {
+	    content: "";
+        position: absolute;
+        width: 0;
+        height: 0;
+        border: 12px solid transparent;
+        border-bottom-color: #fff;
+        left: 40px;
+        bottom: 99%;
+        
+	}
 `;
 
 export const SearchInfoTitle = styled.div`
