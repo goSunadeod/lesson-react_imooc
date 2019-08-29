@@ -16,7 +16,7 @@ class Writer extends PureComponent {
                           src={item.get('imgUrl')}
                           alt=''
                         />
-                        <a className="follow">关注</a>
+                        <div className="follow">关注</div>
                         <p className="name">{item.get('name')}</p>
                         <p className="desc">{item.get('desc')}</p>
                     </WriterItem>

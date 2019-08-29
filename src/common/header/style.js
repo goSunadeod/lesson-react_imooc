@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import logoPic from '../../statics/logo.png';
 
 export const HeaderWrapper = styled.div`
+  z-index: 1;
   position: relative;
   height: 58px;
   border-bottom: 1px solid #f0f0f0;
@@ -31,6 +32,7 @@ export const NavItem = styled.div`
     padding: 0 15px;
     font-size: 17px;
     color: #333;
+    cursor: pointer;
     &.left {
         float: left;
     }
