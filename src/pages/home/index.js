@@ -4,6 +4,7 @@ import Topic from './components/Topic';
 import List from './components/List';
 import Writer from './components/Writer';
 import Recommend from './components/Recommend';
+import demoStore from '../../mobx/demoStore';
 import { actionCreators } from './store';
 import {
     HomeWrapper,
@@ -11,7 +12,11 @@ import {
     HomeRight,
     BackTop
 } from './style';
+import Item from './item';
 
+import { observer } from 'mobx-react';
+
+@observer
 class Home extends Component {
 
     handleScrollTop() {
@@ -21,6 +26,7 @@ class Home extends Component {
     render() {
         return (
           <HomeWrapper>
+              <Item options={demoStore.getData}></Item>
               <HomeLeft>
                   <img className='banner-img' alt='' src="//upload.jianshu.io/admin_banners/web_images/4318/60781ff21df1d1b03f5f8459e4a1983c009175a5.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540" />
                   <Topic />
@@ -38,6 +44,13 @@ class Home extends Component {
     componentDidMount() {
         this.props.changeHomeData();
         this.bindEvents();
+        setTimeout(() => {
+            demoStore.setDate([
+                {code: 1, name: '啊哈111'},
+                {code: 2, name: '啊哈1'},
+                {code: 3, name: '啊哈2'}
+            ])
+        }, 500);
     }
 
     componentWillUnmount() {
@@ -66,4 +79,4 @@ const mapDispatch = (dispatch) => ({
     }
 });
 
-export default connect(mapState, mapDispatch)(Home);
+export default connect(mapState, mapDispatch)((Home));
